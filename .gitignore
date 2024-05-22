@@ -90,3 +90,4 @@ __pypackages__/
 # Rope project settings
 .ropeproject
 /Unknown
+./Attendence.csv
