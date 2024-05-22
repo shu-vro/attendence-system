@@ -83,7 +83,7 @@ while True:
             make_face_box(img, x1, y1, x2, y2, (0, 255, 0), name)
             mark_attendance(name, led_light)
         else:
-            make_face_box(img, x1, y1, x2, y2, (0, 0, 255), name)
+            make_face_box(img, x1, y1, x2, y2, (0, 0, 255))
 
             if not os.path.exists('Unknown'):
                 os.makedirs('Unknown')
@@ -92,6 +92,7 @@ while True:
             # blink_pcb(0.01, buzzer)
             buzzer.write(0)
             unknown_found = True
+            buzzerCounter = 0
             i += 1
 
 
