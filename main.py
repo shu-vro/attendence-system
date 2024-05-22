@@ -4,7 +4,7 @@ import face_recognition
 import os
 import datetime
 import pyfirmata
-from utils import blink_pcb, mark_attendance, parse_encodings, make_face_box
+from utils import mark_attendance, parse_encodings, make_face_box
 import time
 
 
