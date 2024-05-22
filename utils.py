@@ -8,11 +8,19 @@ def blink_pcb(sec, port):
     port.write(1)
 
 def mark_attendance(name, buzzer):
-    if not os.path.exists('Attendance.csv'):
-        with open('Attendance.csv', 'w', newline='') as csv_file:
+    if not os.path.exists('Attendance'):
+        os.makedirs('Attendance')
+
+    now = datetime.datetime.now()
+    dir_name = f"Attendance-{now.strftime('%d-%m-%y')}.csv"
+    file_path = f"Attendance/{dir_name}"
+    
+    # Check if file exists, if not create it and write headers
+    if not os.path.exists(file_path):
+        with open(file_path, 'w', newline='') as csv_file:
             writer = csv.writer(csv_file)
             writer.writerow(['Name', 'Date', 'Time'])
-    with open('Attendance.csv', 'r+', newline='') as csv_file:
+    with open(file_path, 'r+', newline='') as csv_file:
         reader = csv.reader(csv_file)
         nameList = [row[0] for row in reader]
         if name not in nameList:
@@ -20,7 +28,7 @@ def mark_attendance(name, buzzer):
             date = now.strftime('%D')
             time = now.strftime("%I:%M:%S %p")
             blink_pcb(.2, buzzer)
-            with open('Attendance.csv', 'a', newline='') as csv_file:
+            with open(file_path, 'a', newline='') as csv_file:
                 writer = csv.writer(csv_file)
                 writer.writerow([name, date, time])
 
