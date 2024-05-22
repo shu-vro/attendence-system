@@ -37,3 +37,11 @@ pip install -r requirements.txt
 ```sh
 python -u main.py # after activating the virtual environment
 ```
+
+## Usage
+
+-   If you want to add a new person, add the images in a new folder in the `all-images` folder
+-   The name of the folder should be the name of the person
+-   Run the program
+-   If person is recognized, the name will be displayed on the screen, and the red `led` would light up
+-   If person is not recognized, the name will be displayed as `Unknown`, and the buzzer would buzz
