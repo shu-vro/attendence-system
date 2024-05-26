@@ -2,7 +2,7 @@
 
 ## Requirements
 
--   Python 3.6
+-   [Python 3.6](https://www.python.org/ftp/python/3.6.15/Python-3.6.15.tgz)
 -   [requirements.txt](./requirements.txt)
 
 ## Setup
@@ -11,8 +11,8 @@
 
 ```sh
 cd path/to/cloned/folder
-python3.6 -m venv .
-source ./bin/activate
+python3.6 -m venv venv
+source ./venv/bin/activate
 ```
 
 ### Arduino setup
