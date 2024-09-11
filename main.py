@@ -27,7 +27,7 @@ print(classNames)
 
 encoding_list_known = parse_encodings(images)
 print("Encoding Complete")
-
+                            
 
 board = pyfirmata.Arduino('/dev/ttyUSB0')
 print("Communication Successfully started")
@@ -51,8 +51,9 @@ def show_fps():
     p_time = c_time
 
     cv2.putText(img,str(int(fps)), (10, 30), cv2.FONT_HERSHEY_DUPLEX, 1.0, (255,255,255),2)
+    # print("FPS: ", fps)
 
-while True:
+while cap.isOpened():
     success,img = cap.read()
     imgS = cv2.resize(img,(0,0),None,0.25,0.25)
     imgS = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
