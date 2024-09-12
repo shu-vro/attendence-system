@@ -6,6 +6,7 @@ import datetime
 import pyfirmata
 from utils import mark_attendance, parse_encodings, make_face_box
 import time
+import requests
 
 
 path = 'all-images'
@@ -22,8 +23,6 @@ for cl in images_name:
     classNames.append(os.path.splitext(cl)[0])
 
 print(classNames)
-
-
 
 encoding_list_known = parse_encodings(images)
 print("Encoding Complete")
@@ -53,13 +52,36 @@ def show_fps():
     cv2.putText(img,str(int(fps)), (10, 30), cv2.FONT_HERSHEY_DUPLEX, 1.0, (255,255,255),2)
     # print("FPS: ", fps)
 
-while cap.isOpened():
-    success,img = cap.read()
-    imgS = cv2.resize(img,(0,0),None,0.25,0.25)
-    imgS = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-    facesCurFrame = face_recognition.face_locations(imgS)
-    encodeCurFrame = face_recognition.face_encodings(imgS,facesCurFrame)
+url = "http://192.168.1.103:8080/shot.jpg"
+has_ip_cam = True
+try:
+    img_resp = requests.get(url, timeout=2)
+except:
+    has_ip_cam = False
+
+while True:
+    # success,img = cap.read()
+    # imgS = cv2.resize(img,(0,0),None,0.25,0.25)
+    # imgS = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    if has_ip_cam:
+        img_resp = requests.get(url, timeout=1)
+        img_arr = np.array(bytearray(img_resp.content), dtype=np.uint8) 
+        imgS = cv2.imdecode(img_arr, -1)
+        
+        height, width, _ = imgS.shape
+        if height > 640:
+            img = cv2.resize(imgS, (int(width * 640 / height), 640))
+
+    else:
+        ret, img = cap.read()
+
+    img = cv2.flip(img, 1)
+    # imgS = cv2.resize(img,(0,0),None,0.25,0.25)
+    # imgS = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+    facesCurFrame = face_recognition.face_locations(img)
+    encodeCurFrame = face_recognition.face_encodings(img,facesCurFrame)
     now = datetime.datetime.now()
 
     show_fps()
