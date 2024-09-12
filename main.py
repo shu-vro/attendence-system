@@ -61,9 +61,6 @@ except:
     has_ip_cam = False
 
 while True:
-    # success,img = cap.read()
-    # imgS = cv2.resize(img,(0,0),None,0.25,0.25)
-    # imgS = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     if has_ip_cam:
         img_resp = requests.get(url, timeout=1)
         img_arr = np.array(bytearray(img_resp.content), dtype=np.uint8) 
@@ -110,7 +107,7 @@ while True:
 
             if not os.path.exists('Unknown'):
                 os.makedirs('Unknown')
-            cv2.imwrite('Unknown/Unkown' + str(i) + '.jpg', img)
+            cv2.imwrite('Unknown/Unknown' + str(i) + '.jpg', img)
 
             # blink_pcb(0.01, buzzer)
             buzzer.write(0)
