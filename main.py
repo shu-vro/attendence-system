@@ -50,10 +50,9 @@ def show_fps():
     p_time = c_time
 
     cv2.putText(img,str(int(fps)), (10, 30), cv2.FONT_HERSHEY_DUPLEX, 1.0, (255,255,255),2)
-    # print("FPS: ", fps)
 
+url = "http://192.168.1.103" + ":8080/shot.jpg"
 
-url = "http://100.77.217.207" + ":8080/shot.jpg"
 has_ip_cam = True
 try:
     img_resp = requests.get(url, timeout=2)
@@ -89,7 +88,7 @@ while True:
 
     if unknown_found:
         buzzerCounter += 1
-        if buzzerCounter > 10:
+        if buzzerCounter > 5:
             buzzerCounter = 0
             unknown_found = False
             buzzer.write(1)
