@@ -53,7 +53,7 @@ def show_fps():
     # print("FPS: ", fps)
 
 
-url = "http://192.168.1.103:8080/shot.jpg"
+url = "http://100.77.217.207" + ":8080/shot.jpg"
 has_ip_cam = True
 try:
     img_resp = requests.get(url, timeout=2)
@@ -62,13 +62,17 @@ except:
 
 while True:
     if has_ip_cam:
-        img_resp = requests.get(url, timeout=1)
-        img_arr = np.array(bytearray(img_resp.content), dtype=np.uint8) 
-        imgS = cv2.imdecode(img_arr, -1)
-        
-        height, width, _ = imgS.shape
-        if height > 640:
-            img = cv2.resize(imgS, (int(width * 640 / height), 640))
+        try:
+            img_resp = requests.get(url, timeout=1)
+            img_arr = np.array(bytearray(img_resp.content), dtype=np.uint8) 
+            imgS = cv2.imdecode(img_arr, -1)
+            
+            height, width, _ = imgS.shape
+            if height > 640:
+                img = cv2.resize(imgS, (int(width * 640 / height), 640))
+
+        except:
+            has_ip_cam=False
 
     else:
         ret, img = cap.read()
