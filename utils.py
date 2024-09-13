@@ -7,7 +7,7 @@ def blink_pcb(sec, port):
     time.sleep(sec)
     port.write(1)
 
-def mark_attendance(name, buzzer):
+def mark_attendance(name, roll, buzzer):
     if not os.path.exists('Attendance'):
         os.makedirs('Attendance')
 
@@ -19,7 +19,7 @@ def mark_attendance(name, buzzer):
     if not os.path.exists(file_path):
         with open(file_path, 'w', newline='') as csv_file:
             writer = csv.writer(csv_file)
-            writer.writerow(['Name', 'Date', 'Time'])
+            writer.writerow(['Name', "Roll", 'Date', 'Time'])
     with open(file_path, 'r+', newline='') as csv_file:
         reader = csv.reader(csv_file)
         nameList = [row[0] for row in reader]
@@ -30,7 +30,7 @@ def mark_attendance(name, buzzer):
             blink_pcb(.2, buzzer)
             with open(file_path, 'a', newline='') as csv_file:
                 writer = csv.writer(csv_file)
-                writer.writerow([name, date, time])
+                writer.writerow([name, roll, date, time])
 
 
 def make_face_box(img, x1: int, y1: int, x2 : int, y2: int, color: Tuple[int,int,int], name="Unknown"):

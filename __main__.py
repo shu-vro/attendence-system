@@ -12,15 +12,20 @@ import requests
 path = 'all-images'
 images = []
 classNames = []
+rolls = []
 images_name = os.listdir(path)
 p_time, c_time = 0, 0
 
 print(images_name)
 
+
 for cl in images_name:
     curImg = cv2.imread(f'{path}/{cl}')
     images.append(curImg)
-    classNames.append(os.path.splitext(cl)[0])
+    image_name = os.path.splitext(cl)[0]
+    (name, roll) = image_name.split('-')
+    classNames.append(name)
+    rolls.append(roll)
 
 print(classNames)
 
@@ -103,8 +108,9 @@ while True:
 
         if matches[matchIndex]:
             name = classNames[matchIndex].upper()
+            roll = rolls[matchIndex]
             make_face_box(img, x1, y1, x2, y2, (0, 255, 0), name)
-            mark_attendance(name, led_light)
+            mark_attendance(name, roll, led_light)
         else:
             make_face_box(img, x1, y1, x2, y2, (0, 0, 255))
 
