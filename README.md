@@ -18,6 +18,11 @@ source ./venv/bin/activate
 ### Arduino setup
 
 -   Connect the Arduino to the computer
+    -   in case you run into an error where you cannot connect to arduino because of lack of permissions, do this
+    ```sh
+    # for linux
+    sudo chmod a+rw /dev/ttyUSB0 # or your usb port
+    ```
 -   Upload the [Arduino code](./firmata-config-arduino/firmata-config-arduino.ino) to the Arduino
 
 ## Installation
@@ -35,7 +40,7 @@ pip install -r requirements.txt
 ## Running
 
 ```sh
-python -u main.py # after activating the virtual environment
+python -u . # after activating the virtual environment
 ```
 
 ## Usage
