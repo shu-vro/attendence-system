@@ -56,7 +56,8 @@ def show_fps():
 
     cv2.putText(img,str(int(fps)), (10, 30), cv2.FONT_HERSHEY_DUPLEX, 1.0, (255,255,255),2)
 
-url = "http://192.168.1.103" + ":8080/shot.jpg"
+url = "http://100.106.155.88" + ":8080/shot.jpg"
+# url = "http://192.168.1.103" + ":8080/shot.jpg"
 
 has_ip_cam = True
 try:
@@ -69,19 +70,20 @@ while True:
         try:
             img_resp = requests.get(url, timeout=1)
             img_arr = np.array(bytearray(img_resp.content), dtype=np.uint8) 
-            imgS = cv2.imdecode(img_arr, -1)
+            img = cv2.imdecode(img_arr, -1)
+            # img = cv2.flip(img, 2)
             
-            height, width, _ = imgS.shape
+            height, width, _ = img.shape
             if height > 640:
-                img = cv2.resize(imgS, (int(width * 640 / height), 640))
+                img = cv2.resize(img, (int(width * 640 / height), 640))
 
         except:
             has_ip_cam=False
 
     else:
         ret, img = cap.read()
+        img = cv2.flip(img, 1)
 
-    img = cv2.flip(img, 1)
     # imgS = cv2.resize(img,(0,0),None,0.25,0.25)
     # imgS = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 

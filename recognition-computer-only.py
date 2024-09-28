@@ -77,6 +77,7 @@ while True:
     for encodeFace, faceLoc in zip(encodeCurFrame, facesCurFrame):
         matches = face_recognition.compare_faces(encoding_list_known, encodeFace)
         faceDis = face_recognition.face_distance(encoding_list_known, encodeFace)
+        print(f'facedis: {faceDis}')
         matchIndex = np.argmin(faceDis)
 
         y1, x2, y2, x1 = faceLoc
@@ -84,7 +85,6 @@ while True:
         if matches[matchIndex]:
             name = classNames[matchIndex].upper()
             make_face_box(img, x1, y1, x2, y2, (0, 255, 0), name)
-            mark_attendance(name, led_light)
         else:
             make_face_box(img, x1, y1, x2, y2, (0, 0, 255))
 
